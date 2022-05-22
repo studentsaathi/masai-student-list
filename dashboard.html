@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dashboard</title>
+    <style>
+        #container{
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+           
+        }
+        #container>div{
+            height: 200px;
+            width: 30%;
+
+        }
+        #container>div>img{
+            height: 80%;
+            width: 100%;
+        }
+        #navbar{
+            height: 40px;
+            width: 100%;
+            background-color: aqua;
+            display: flex;
+
+        }
+        a{
+            margin-left: 100px;
+            font-size: 33px;
+            text-decoration: none;
+
+
+
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar">
+        <a href="dashboard.html">Dashboard </a>
+        <a href="index.html">Home </a>
+
+    </div>
+    <div id="container">
+
+    </div>
+    
+</body>
+</html>
+<script>
+    function append(){
+        let data=JSON.parse(localStorage.getItem("students")) || [];
+        let container=document.getElementById("container")
+        container.innerHTML=null;
+        data.forEach(function(el,index){
+           // console.log(el)
+           let div=document.createElement('div');
+
+           let img=document.createElement('img');
+           img.src=el.image;
+
+           let h3=document.createElement('h3');
+           h3.innerText=` Name :- ${el.name}`;
+
+           let course =document.createElement("p");
+           course.innerText=`course :- ${el.course}`;
+
+           let unit=document.createElement("p")
+           unit.innerText=`Unit :- ${el.unit}`;
+
+
+
+           let btn=document.createElement('button')
+           btn.innerText="Remove"
+           btn.addEventListener("click",function(){
+            remove(el,index);
+           } )
+           div.append(img,h3,course,unit,btn)
+           container.append(div)
+
+        });
+         
+
+    }
+    //append()
+    function remove(el,index){
+        window.location.reload()
+        
+       
+       
+        let data=JSON.parse(localStorage.getItem("students")) || [];
+        
+        let newData=data.filter(function(el,i){
+            if(i==index){
+                let trash=JSON.parse(localStorage.getItem("trash")) || [];
+                trash.push(el);
+                localStorage.setItem("trash",JSON.stringify(trash));
+                
+            }
+            else{
+                returni!==index;
+            }
+           
+        });
+        localStorage.setItem('students',JSON.stringify(newData));
+       
+
+
+    }
+
+    append();
+</script>

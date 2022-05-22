@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        #filldiv{
+            margin: auto;
+            height: 300px;
+            width: 20%;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+
+        }
+        input{
+            width: 90%;
+            margin-top: 10px;
+            margin-left: 10px;
+
+
+        }
+        #navbar{
+            height: 40px;
+            width: 100%;
+            background-color: aqua;
+            display: flex;
+
+        }
+        a{
+            margin-left: 100px;
+            font-size: 33px;
+            text-decoration: none;
+
+
+
+        }
+        #navbar>p{
+            margin-left: 100px;
+            font-size: 30px;
+            margin: auto;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="navbar">
+        <a href="dashboard.html">Dashboard </a>
+        <a href="index.html">Home </a>
+        <p id="showbatch"></p>
+
+    </div>
+    <div id="filldiv">
+    <h1>Add Student Data</h1>
+    <form id="student_data" onsubmit="storeData(event)">
+        <input type="text" id="name" placeholder="Enter Name">
+        <input type="text" id="course" placeholder="Enter Course">
+        <input type="number" id="unit" placeholder="Enter Unit">
+        <input type="text" id="image" placeholder="Enter Image url">
+        <input type="number" id="batch" placeholder="Ft_Web Batch No" >
+        <input type="submit"/>
+
+    </form>
+    </div>
+    
+</body>
+</html>
+<script>
+      function Student(n,c,u,i,b){
+       this.name=n;
+       this.course=c;
+       this.unit=u;
+       this.image=i;
+       this.batch=`Ft-Web${b}`;
+   }
+
+
+   function storeData(e){
+       e.preventDefault();
+       let form=document.getElementById("student_data");
+       let name=form.name.value;
+       let course=form.course.value;
+       let unit=form.unit.value;
+       let image=form.image.value;
+       let batch=form.batch.value;
+       let s1=new Student(name,course,unit,image,batch);
+       let data =JSON.parse(localStorage.getItem("students")) || [];
+       data.push(s1);
+       localStorage.setItem("students",JSON.stringify(data));
+
+        
+       //console.log(name)
+   }
+   function calculate(){
+       let data=JSON.parse(localStorage.getItem("students")) || [];
+       let showbatch=document.getElementById("showbatch")
+       let obj={};
+       for(let i=0;i<data.length;i++){
+           if(!obj[data[i].batch]){
+               obj[data[i].batch]=1;
+               showbatch.innerHTML="Ft-Web3"
+               console.log(obj)
+
+           }
+       }
+   }
+//    for(let i=0;i<data.length;i++){
+//            obj[data[i].batch]++;
+            
+
+           
+//        }
+   
+  
+   calculate();
+</script>
